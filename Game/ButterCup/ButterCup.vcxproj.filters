@@ -24,12 +24,24 @@
     <ClCompile Include="coreMechanics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="moneyLogic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="upgradeLogic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="coreMechanics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="moneyLogic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="upgradeLogic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

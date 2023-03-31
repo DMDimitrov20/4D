@@ -143,10 +143,14 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="coreMechanics.cpp" />
+    <ClCompile Include="moneyLogic.cpp" />
+    <ClCompile Include="upgradeLogic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
     <ClInclude Include="coreMechanics.h" />
+    <ClInclude Include="moneyLogic.h" />
+    <ClInclude Include="upgradeLogic.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
