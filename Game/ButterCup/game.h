@@ -17,4 +17,16 @@ struct UPGRADE {
 	double moneyIncreaser;
 };
 
+struct FLOWER
+{
+	Texture2D image;
+	const char* name;
+	double price;
+	bool affordable;
+	Rectangle hitbox;
+	int flowerCount = 0;
+	double oxygenIncreaser;
+};
+
+
 void startGame();

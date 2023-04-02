@@ -19,9 +19,13 @@ void startGame()
 	storage.cElementCount = 0;
 	storage.hElementCount = 0;
 
-	// Initialize g
+	// Initialize player's wallet
 	double wallet = 0;
 	double* walletPtr = &wallet;
+
+	//Initialize oxygen level
+	double oxygenLevel = 0;
+	double* oxygenLevelPtr = &oxygenLevel;
 	
 	// Initialize variable for increasing player's chemicals
 	double moneyIncreaser = 1;
@@ -38,15 +42,19 @@ void startGame()
 	// Intialize game textures
 	Texture2D background = LoadTexture("../resources/BackgroundColour.png");
 	Texture2D backgroundFrame = LoadTexture("../resources/BackgroundFrame.png");
+	Texture2D gameBackground = LoadTexture("../resources/GameBackground.png");
 	Texture2D title = LoadTexture("../resources/ButtercupText.png");
 	Texture2D startButton = LoadTexture("../resources/StartButton.png");
 	Texture2D exitButton = LoadTexture("../resources/ExitButton.png");
 	Texture2D flower = LoadTexture("../resources/Flower.png");
 	Texture2D upgradeFrame = LoadTexture("../resources/upgrades/upgradeTable.png");
+	Texture2D flowerFrame = LoadTexture("../resources/upgrades/FlowerTable.png");
 
-	// initialize upgrade array
-	UPGRADE* upgradeArr = initalizeUpgrades(upgradeFrame, width, height);
-	UPGRADE* upgradeArrPtr = upgradeArr;
+	// Initialize upgrade array
+	UPGRADE* upgradeArr = initializeUpgrades(upgradeFrame, width, height);
+
+	// Initialize flower array
+	FLOWER* flowerArr = initializeFlowers(upgradeFrame, width, height);
 
 	// Initialize hitboxes
 	Rectangle startButtonHitbox = { float(width) / 2 - float(startButton.width) / 2, 500 - float(startButton.height) / 2, startButton.width, startButton.height };
@@ -68,9 +76,11 @@ void startGame()
 		{
 			earnElements(mousePoint, flowerHitbox, storagePtr, moneyIncreaser);
 
-			upgradeBuySystem(storagePtr, upgradeArrPtr, defaultMoneyIncreaserPtr, mousePoint);
+			upgradeBuySystem(storagePtr, upgradeArr, defaultMoneyIncreaserPtr, mousePoint);
 
 			defaultMoneyIncrease(walletPtr, defaultMoneyIncreaser);
+
+			flowerBuySystem(walletPtr, flowerArr, oxygenLevelPtr, mousePoint);
 		}
 
 		BeginDrawing();
@@ -95,11 +105,15 @@ void startGame()
 		// Draw game screen
 		case 2:
 		{
+			DrawTextureEx(gameBackground, Vector2{ 0,0 }, 0, 0.75, RAYWHITE);
+
 			drawMainGame(flower, width, height, storage, mousePoint, flowerHitbox, wallet);
 
 			showMoneyIncreaser(mousePoint, flowerHitbox, moneyIncreaser);
 
 			drawUpgradeMenu(upgradeArr, upgradeFrame, width, height, mousePoint);
+
+			drawFlowerMenu(flowerArr, flowerFrame, width, height, mousePoint);
 		}break;
 
 		}

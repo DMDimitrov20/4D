@@ -32,3 +32,31 @@ void upgradeBuySystem(STORAGE* storagePtr, UPGRADE* upgradeArrPtr, double* defau
 		}
 	}
 }
+
+void flowerBuySystem(double* wallet, FLOWER* flowerArrPtr, double* oxygenInsreaser, Vector2 mousePoint)
+{
+	for (int i = 0; i < 3; i++)
+	{
+		// Check if upgrade is available
+		if (*wallet >= flowerArrPtr[i].price)
+		{
+			flowerArrPtr[i].affordable = true;
+		}
+		else
+		{
+			flowerArrPtr[i].affordable = false;
+		}
+
+		// Buy upgrade
+		if (flowerArrPtr[i].affordable)
+		{
+			if (CheckCollisionPointRec(mousePoint, flowerArrPtr[i].hitbox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+			{
+				flowerArrPtr[i].flowerCount++;
+				*wallet -= flowerArrPtr[i].price;
+				*oxygenInsreaser += flowerArrPtr[i].oxygenIncreaser;
+				flowerArrPtr[i].price *= 2;
+			}
+		}
+	}
+}

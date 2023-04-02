@@ -1,14 +1,10 @@
 #include <raylib.h>
 #include <iostream>
 #include <string>
+#include <string.h>
 #include "coreMechanics.h"
 #include "game.h"
-#include <string.h>
 
-struct UPGRADES {
-	Texture2D upgradeImage;
-	int upgradeCost;
-};
 
 // Close game 
 void closeGame(bool* exitPtr, Vector2 mousePoint, Rectangle exitButtonHitbox, int screenState)
@@ -61,7 +57,7 @@ void showMoneyIncreaser(Vector2 mousePoint, Rectangle flowerHitbox, int moneyInc
 	{
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 		{
-			DrawText(TextFormat("+%i", moneyIncreaser), mousePoint.x, mousePoint.y, 40, BLACK);
+			DrawText(TextFormat("+%i", moneyIncreaser), mousePoint.x, mousePoint.y, 40, RAYWHITE);
 		}
 	}
 }
@@ -87,7 +83,7 @@ void drawMainGame(Texture2D flower, int width, int height, STORAGE storage, Vect
 	}
 	DrawText(TextFormat("C%i", int(storage.cElementCount)), 50, 40, 30, BLACK);
 	DrawText(TextFormat("H%i", int(storage.hElementCount)), 50, 80, 30, BLACK);
-	DrawText(TextFormat("%i", wallet), 50, 120, 30, BLACK);
+	DrawText(TextFormat("$%i", wallet), 50, 120, 30, BLACK);
 }
 
 // Draw upgrade menu
@@ -116,6 +112,34 @@ void drawUpgradeMenu(UPGRADE upgradeArr[3], Texture2D upgradeFrame, int width, i
 		DrawText(TextFormat("H%i", int(upgradeArr[i].hElementCost)), float(width / 2 - upgradeFrame.width / 2) + 900, float(height / 2 - upgradeFrame.height / 2) - initialPosition + positionIncreasement + 200, 30, color);
 		DrawText(TextFormat("x%i", upgradeArr[i].upgradeCount), float(width / 2 - upgradeFrame.width / 2) + 1046, float(height / 2 - upgradeFrame.height / 2) - initialPosition + positionIncreasement + 200, 30, color);
 		
+		positionIncreasement += 120; // Increase position before drawing the next upgrade
+	}
+}
+
+void drawFlowerMenu(FLOWER flowerArr[3], Texture2D upgradeFrame, int width, int height, Vector2 mousePoint)
+{
+	float initialPosition = -150;
+	float positionIncreasement = 0;
+
+	for (int i = 0; i < 3; i++)
+	{
+		auto color = flowerArr[i].affordable ? RAYWHITE : GRAY; // Check if the upgrade is affordable and change the color 
+
+		DrawTextureEx(upgradeFrame, { float(width / 2 - upgradeFrame.width / 2) + 700, float(height / 2 - upgradeFrame.height / 2) - initialPosition + positionIncreasement }, 0, 0.8, color);
+
+		if (CheckCollisionPointRec(mousePoint, flowerArr[i].hitbox) && IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+		{
+			DrawTextureEx(flowerArr[i].image, { float(width / 2 - upgradeFrame.width / 2) + 710, float(height / 2 - upgradeFrame.height / 2) - initialPosition + positionIncreasement + 143 }, 0, 0.35, color);
+		}
+		else
+		{
+			DrawTextureEx(flowerArr[i].image, { float(width / 2 - upgradeFrame.width / 2) + 713, float(height / 2 - upgradeFrame.height / 2) - initialPosition + positionIncreasement + 143 }, 0, 0.35, color);
+		}
+
+		DrawText(flowerArr[i].name, float(width / 2 - upgradeFrame.width / 2) + 825, float(height / 2 - upgradeFrame.height / 2) - initialPosition + positionIncreasement + 160, 30, color);
+		DrawText(TextFormat("$%i", int(flowerArr[i].price)), float(width / 2 - upgradeFrame.width / 2) + 825, float(height / 2 - upgradeFrame.height / 2) - initialPosition + positionIncreasement + 200, 30, color);
+		DrawText(TextFormat("x%i", flowerArr[i].flowerCount), float(width / 2 - upgradeFrame.width / 2) + 1046, float(height / 2 - upgradeFrame.height / 2) - initialPosition + positionIncreasement + 200, 30, color);
+
 		positionIncreasement += 120; // Increase position before drawing the next upgrade
 	}
 }

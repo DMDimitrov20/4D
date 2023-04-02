@@ -13,3 +13,5 @@ void drawMainGame(Texture2D flower, int width, int height, STORAGE storage, Vect
 void showMoneyIncreaser(Vector2 mousePoint, Rectangle flowerHitbox, int moneyIncreaser);
 
 void drawUpgradeMenu(UPGRADE upgradeArr[3], Texture2D upgradeFrame, int width, int height, Vector2 mousePoint);
+
+void drawFlowerMenu(FLOWER flowerArr[3], Texture2D upgradeFrame, int width, int height, Vector2 mousePoint);
