@@ -2,9 +2,8 @@
 #include <iostream>
 #include <string>
 #include "coreMechanics.h"
-#include <chrono>
-
-using std::chrono::seconds;
+#include "game.h"
+#include <string.h>
 
 struct UPGRADES {
 	Texture2D upgradeImage;
@@ -43,6 +42,7 @@ void closeGame(bool* exitPtr, Vector2 mousePoint, Rectangle exitButtonHitbox, in
 	}
 }
 
+// Change screens on button click
 void changeScreens(Vector2 mousePoint, Rectangle startButtonHitbox, int* menuState)
 {
 	if (CheckCollisionPointRec(mousePoint, startButtonHitbox))
@@ -54,10 +54,9 @@ void changeScreens(Vector2 mousePoint, Rectangle startButtonHitbox, int* menuSta
 	}
 }
 
+// Draw money increase value when the flower is pressed
 void showMoneyIncreaser(Vector2 mousePoint, Rectangle flowerHitbox, int moneyIncreaser)
 {
-	auto countdown = std::chrono::seconds(60);
-
 	if (CheckCollisionPointRec(mousePoint, flowerHitbox))
 	{
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
@@ -76,7 +75,7 @@ void drawMenu(Texture2D title,Texture2D startButton, Texture2D exitButton, int w
 }
 
 // Draw game textures
-void drawMainGame(Texture2D flower, int width, int height, int wallet, Vector2 mousePoint, Rectangle flowerHitbox)
+void drawMainGame(Texture2D flower, int width, int height, STORAGE storage, Vector2 mousePoint, Rectangle flowerHitbox, int wallet)
 {
 	if (CheckCollisionPointRec(mousePoint, flowerHitbox) && IsMouseButtonDown(MOUSE_BUTTON_LEFT))
 	{
@@ -86,5 +85,37 @@ void drawMainGame(Texture2D flower, int width, int height, int wallet, Vector2 m
 	{
 		DrawTextureEx(flower, Vector2{ float(width) / 2 - float(flower.width) / 2, float(height) / 2 - 300 }, 0, 1, RAYWHITE);
 	}
-	DrawText(TextFormat("%i", wallet), 50, 50, 30, BLACK);
+	DrawText(TextFormat("C%i", int(storage.cElementCount)), 50, 40, 30, BLACK);
+	DrawText(TextFormat("H%i", int(storage.hElementCount)), 50, 80, 30, BLACK);
+	DrawText(TextFormat("%i", wallet), 50, 120, 30, BLACK);
+}
+
+// Draw upgrade menu
+void drawUpgradeMenu(UPGRADE upgradeArr[3], Texture2D upgradeFrame, int width, int height, Vector2 mousePoint)
+{
+	float initialPosition = 300;
+	float positionIncreasement = 0;
+
+	for (int i = 0; i < 3; i++)
+	{
+		auto color = upgradeArr[i].affordable ? RAYWHITE : GRAY; // Check if the upgrade is affordable and change the color 
+
+		DrawTextureEx(upgradeFrame, { float(width / 2 - upgradeFrame.width / 2) + 700, float(height / 2 - upgradeFrame.height / 2) - initialPosition + positionIncreasement }, 0, 0.8, color);
+		
+		if (CheckCollisionPointRec(mousePoint, upgradeArr[i].hitbox) && IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+		{
+			DrawTextureEx(upgradeArr[i].image, { float(width / 2 - upgradeFrame.width / 2) + 710, float(height / 2 - upgradeFrame.height / 2) - initialPosition + positionIncreasement + 143 }, 0, 0.40, color);
+		}
+		else
+		{
+			DrawTextureEx(upgradeArr[i].image, { float(width / 2 - upgradeFrame.width / 2) + 705, float(height / 2 - upgradeFrame.height / 2) - initialPosition + positionIncreasement + 143 }, 0, 0.45, color);
+		}
+
+		DrawText(upgradeArr[i].name, float(width / 2 - upgradeFrame.width / 2) + 825, float(height / 2 - upgradeFrame.height / 2) - initialPosition + positionIncreasement + 160, 30, color);
+		DrawText(TextFormat("C%i", int(upgradeArr[i].cElementCost)), float(width / 2 - upgradeFrame.width / 2) + 825, float(height / 2 - upgradeFrame.height / 2) - initialPosition + positionIncreasement + 200, 30, color);
+		DrawText(TextFormat("H%i", int(upgradeArr[i].hElementCost)), float(width / 2 - upgradeFrame.width / 2) + 900, float(height / 2 - upgradeFrame.height / 2) - initialPosition + positionIncreasement + 200, 30, color);
+		DrawText(TextFormat("x%i", upgradeArr[i].upgradeCount), float(width / 2 - upgradeFrame.width / 2) + 1046, float(height / 2 - upgradeFrame.height / 2) - initialPosition + positionIncreasement + 200, 30, color);
+		
+		positionIncreasement += 120; // Increase position before drawing the next upgrade
+	}
 }

@@ -144,6 +144,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="coreMechanics.cpp" />
     <ClCompile Include="moneyLogic.cpp" />
+    <ClCompile Include="upgradeInitialization.cpp" />
     <ClCompile Include="upgradeLogic.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +152,7 @@
     <ClInclude Include="coreMechanics.h" />
     <ClInclude Include="moneyLogic.h" />
     <ClInclude Include="upgradeLogic.h" />
+    <ClInclude Include="upgradesInitialization.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

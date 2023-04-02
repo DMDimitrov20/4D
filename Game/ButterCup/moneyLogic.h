@@ -1,5 +1,6 @@
 #pragma once
+#include "game.h"
 
-void addMoney(Vector2 mousePoint, Rectangle flowerHitbox, int* walletPtr, int moneyInreaser);
+void earnElements(Vector2 mousePoint, Rectangle flowerHitbox, STORAGE* storagePtr, double moneyInreaser);
 
-void defaultMoneyIncrease(int* walletPtr, int defaultMoneyIncreaser);
+void defaultMoneyIncrease(double* walletPtr, double defaultMoneyIncreaser);

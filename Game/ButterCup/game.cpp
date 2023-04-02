@@ -3,6 +3,8 @@
 #include "game.h"
 #include "coreMechanics.h"
 #include "moneyLogic.h"
+#include "upgradesInitialization.h"
+#include "upgradeLogic.h"
 
 void startGame()
 {
@@ -11,17 +13,25 @@ void startGame()
 	
 	InitWindow(width, height, "ButterCup");
 
-	// initialize game wallet
-	int wallet = 0;
-	int* walletPtr = &wallet;
+	// Initialize chemical elemnts storage
+	STORAGE storage;
+	STORAGE* storagePtr = &storage;
+	storage.cElementCount = 0;
+	storage.hElementCount = 0;
+
+	// Initialize g
+	double wallet = 0;
+	double* walletPtr = &wallet;
 	
-	// Initialize variable for increasing player's money
-	int moneyIncreaser = 1;
-	int defaultMoneyIncreaser = 0;
+	// Initialize variable for increasing player's chemicals
+	double moneyIncreaser = 1;
+	double defaultMoneyIncreaser = 0;
+	double* defaultMoneyIncreaserPtr = &defaultMoneyIncreaser;
 	
 	// Initialize mouse pointer
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
+	// Initialize screen variable
 	int screenState = 1;
 	int* screenStatePtr = &screenState;
 
@@ -32,6 +42,11 @@ void startGame()
 	Texture2D startButton = LoadTexture("../resources/StartButton.png");
 	Texture2D exitButton = LoadTexture("../resources/ExitButton.png");
 	Texture2D flower = LoadTexture("../resources/Flower.png");
+	Texture2D upgradeFrame = LoadTexture("../resources/upgrades/upgradeTable.png");
+
+	// initialize upgrade array
+	UPGRADE* upgradeArr = initalizeUpgrades(upgradeFrame, width, height);
+	UPGRADE* upgradeArrPtr = upgradeArr;
 
 	// Initialize hitboxes
 	Rectangle startButtonHitbox = { float(width) / 2 - float(startButton.width) / 2, 500 - float(startButton.height) / 2, startButton.width, startButton.height };
@@ -44,13 +59,16 @@ void startGame()
 
 	while (!exitWindow)
 	{
+		// Get mouse position
 		mousePoint = GetMousePosition();
 
 		closeGame(exitPtr, mousePoint, exitButtonHitbox, screenState);
 		
 		if (screenState == 2)
 		{
-			addMoney(mousePoint, flowerHitbox, walletPtr, moneyIncreaser);
+			earnElements(mousePoint, flowerHitbox, storagePtr, moneyIncreaser);
+
+			upgradeBuySystem(storagePtr, upgradeArrPtr, defaultMoneyIncreaserPtr, mousePoint);
 
 			defaultMoneyIncrease(walletPtr, defaultMoneyIncreaser);
 		}
@@ -77,9 +95,11 @@ void startGame()
 		// Draw game screen
 		case 2:
 		{
-			drawMainGame(flower, width, height, wallet, mousePoint, flowerHitbox);
+			drawMainGame(flower, width, height, storage, mousePoint, flowerHitbox, wallet);
 
 			showMoneyIncreaser(mousePoint, flowerHitbox, moneyIncreaser);
+
+			drawUpgradeMenu(upgradeArr, upgradeFrame, width, height, mousePoint);
 		}break;
 
 		}
