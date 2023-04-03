@@ -21,7 +21,7 @@ void startGame()
 	storage.hElementCount = 0;
 
 	// Initialize player's wallet
-	double wallet = 1000000;
+	double wallet = 0;
 	double* walletPtr = &wallet;
 
 	//Initialize oxygen level
