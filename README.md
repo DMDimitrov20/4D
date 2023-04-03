@@ -4,11 +4,11 @@
     
 </p>
 <p align = "center">
-<img src = "https://img.shields.io/github/license/DMDimitrov20/4D?color=%2333FFD3&style=for-the-badge">
+<img src = "https://img.shields.io/github/license/DMDimitrov20/4D?style=for-the-badge">
     <img src = "https://img.shields.io/github/last-commit/DMDimitrov20/4D?color=%23334FFF&style=for-the-badge">
-    <img src = "https://img.shields.io/github/issues/DMDimitrov20/4D?color=%23D633FF&style=for-the-badge">
+    <img src = "https://img.shields.io/github/issues-closed-raw/DMDimitrov20/4D?style=for-the-badge">
     <img src = "https://img.shields.io/github/contributors/DMDimitrov20/4D?color=%23A0FF33&style=for-the-badge">
-    <img src = "https://img.shields.io/github/repo-size/DSChebotarev/4D?color=%23000000&logoColor=%230000000&style=for-the-badge">
+    <img src = "https://img.shields.io/github/repo-size/DMDimitrov20/4D?style=for-the-badge">
 <hr></p>
 
 ## 💻 About
