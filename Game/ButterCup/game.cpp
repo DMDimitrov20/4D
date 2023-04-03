@@ -1,5 +1,6 @@
 #include <raylib.h>
 #include <iostream>
+#include <vector>
 #include "game.h"
 #include "coreMechanics.h"
 #include "moneyLogic.h"
@@ -20,7 +21,7 @@ void startGame()
 	storage.hElementCount = 0;
 
 	// Initialize player's wallet
-	double wallet = 0;
+	double wallet = 1000000;
 	double* walletPtr = &wallet;
 
 	//Initialize oxygen level
@@ -49,6 +50,7 @@ void startGame()
 	Texture2D flower = LoadTexture("../resources/Flower.png");
 	Texture2D upgradeFrame = LoadTexture("../resources/upgrades/upgradeTable.png");
 	Texture2D flowerFrame = LoadTexture("../resources/upgrades/FlowerTable.png");
+	Texture2D garden = LoadTexture("../resources/garden.png");
 
 	// Initialize upgrade array
 	UPGRADE* upgradeArr = initializeUpgrades(upgradeFrame, width, height);
@@ -56,10 +58,15 @@ void startGame()
 	// Initialize flower array
 	FLOWER* flowerArr = initializeFlowers(upgradeFrame, width, height);
 
+	// Initialize garden flowers storage
+	std::vector<GARDEN_FLOWER> gardenFlowers;
+	std::vector<GARDEN_FLOWER>* gardenFlowersPtr = &gardenFlowers;
+
 	// Initialize hitboxes
 	Rectangle startButtonHitbox = { float(width) / 2 - float(startButton.width) / 2, 500 - float(startButton.height) / 2, startButton.width, startButton.height };
 	Rectangle exitButtonHitbox = { float(width) / 2 - float(exitButton.width) / 2, 700 - float(exitButton.height) / 2, exitButton.width, exitButton.height };
 	Rectangle flowerHitbox  = { float(width) / 2 - float(flower.width) / 2, float(height) / 2 - 300, flower.width, flower.height };
+	Rectangle rec = { 210, 430, 210, 190 };
 	
 	// Initialize variable for closing the game
 	bool exitWindow = false;
@@ -80,7 +87,7 @@ void startGame()
 
 			defaultMoneyIncrease(walletPtr, defaultMoneyIncreaser);
 
-			flowerBuySystem(walletPtr, flowerArr, oxygenLevelPtr, mousePoint);
+			flowerBuySystem(walletPtr, flowerArr, oxygenLevelPtr, mousePoint, gardenFlowersPtr);
 		}
 
 		BeginDrawing();
@@ -105,9 +112,7 @@ void startGame()
 		// Draw game screen
 		case 2:
 		{
-			DrawTextureEx(gameBackground, Vector2{ 0,0 }, 0, 0.75, RAYWHITE);
-
-			drawMainGame(flower, width, height, storage, mousePoint, flowerHitbox, wallet);
+			drawMainGame(gameBackground, flower, garden, width, height, storage, mousePoint, flowerHitbox, wallet, gardenFlowers);
 
 			showMoneyIncreaser(mousePoint, flowerHitbox, moneyIncreaser);
 

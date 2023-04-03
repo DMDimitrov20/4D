@@ -1,4 +1,5 @@
 #include <raylib.h>
+#include <vector>
 #include "game.h"
 #include "upgradeLogic.h"
 
@@ -33,7 +34,7 @@ void upgradeBuySystem(STORAGE* storagePtr, UPGRADE* upgradeArrPtr, double* defau
 	}
 }
 
-void flowerBuySystem(double* wallet, FLOWER* flowerArrPtr, double* oxygenInsreaser, Vector2 mousePoint)
+void flowerBuySystem(double* wallet, FLOWER* flowerArrPtr, double* oxygenInsreaser, Vector2 mousePoint, std::vector<GARDEN_FLOWER>* gardenFlowers)
 {
 	for (int i = 0; i < 3; i++)
 	{
@@ -56,6 +57,14 @@ void flowerBuySystem(double* wallet, FLOWER* flowerArrPtr, double* oxygenInsreas
 				*wallet -= flowerArrPtr[i].price;
 				*oxygenInsreaser += flowerArrPtr[i].oxygenIncreaser;
 				flowerArrPtr[i].price *= 2;
+
+				GARDEN_FLOWER flower;
+				flower.xCor = GetRandomValue(230, 400);
+				flower.yCor = GetRandomValue(450, 600);
+				flower.flowerImage = flowerArrPtr[i].image;
+
+				gardenFlowers->push_back(flower);
+
 			}
 		}
 	}

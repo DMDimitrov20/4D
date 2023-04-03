@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <string.h>
+#include <vector>
 #include "coreMechanics.h"
 #include "game.h"
 
@@ -71,8 +72,19 @@ void drawMenu(Texture2D title,Texture2D startButton, Texture2D exitButton, int w
 }
 
 // Draw game textures
-void drawMainGame(Texture2D flower, int width, int height, STORAGE storage, Vector2 mousePoint, Rectangle flowerHitbox, int wallet)
+void drawMainGame(Texture2D background, Texture2D flower, Texture2D garden, int width, int height, STORAGE storage, Vector2 mousePoint, Rectangle flowerHitbox, int wallet, std::vector<GARDEN_FLOWER> gardenFlowers)
 {
+	DrawTextureEx(background, Vector2{ 0, 0 }, 0, 0.75, RAYWHITE);
+
+	DrawTextureEx(garden, Vector2{ 0, 200 }, 0, 1.25, RAYWHITE);
+
+	unsigned int vecSize = gardenFlowers.size();
+
+	for (unsigned int i = 0; i < vecSize; i++)
+	{
+		DrawTextureEx(gardenFlowers[i].flowerImage, { gardenFlowers[i].xCor - gardenFlowers[i].flowerImage.width / 2 + 80, gardenFlowers[i].yCor - gardenFlowers[i].flowerImage.height / 2 + 50 }, 0, 0.4, RAYWHITE);
+	}
+
 	if (CheckCollisionPointRec(mousePoint, flowerHitbox) && IsMouseButtonDown(MOUSE_BUTTON_LEFT))
 	{
 		DrawTextureEx(flower, Vector2{ (float(width) / 2 - float(flower.width) / 2) + 10, float(height) / 2 - 300 }, 0, 0.95, RAYWHITE);
@@ -81,9 +93,9 @@ void drawMainGame(Texture2D flower, int width, int height, STORAGE storage, Vect
 	{
 		DrawTextureEx(flower, Vector2{ float(width) / 2 - float(flower.width) / 2, float(height) / 2 - 300 }, 0, 1, RAYWHITE);
 	}
-	DrawText(TextFormat("C%i", int(storage.cElementCount)), 50, 40, 30, BLACK);
-	DrawText(TextFormat("H%i", int(storage.hElementCount)), 50, 80, 30, BLACK);
-	DrawText(TextFormat("$%i", wallet), 50, 120, 30, BLACK);
+	DrawText(TextFormat("C%i", int(storage.cElementCount)), 50, 40, 30, RAYWHITE);
+	DrawText(TextFormat("H%i", int(storage.hElementCount)), 50, 80, 30, RAYWHITE);
+	DrawText(TextFormat("$%i", wallet), 50, 120, 30, RAYWHITE);
 }
 
 // Draw upgrade menu
@@ -123,7 +135,7 @@ void drawFlowerMenu(FLOWER flowerArr[3], Texture2D upgradeFrame, int width, int 
 
 	for (int i = 0; i < 3; i++)
 	{
-		auto color = flowerArr[i].affordable ? RAYWHITE : GRAY; // Check if the upgrade is affordable and change the color 
+		auto color = flowerArr[i].affordable ? RAYWHITE : GRAY; // Check if the flower is affordable and change the color 
 
 		DrawTextureEx(upgradeFrame, { float(width / 2 - upgradeFrame.width / 2) + 700, float(height / 2 - upgradeFrame.height / 2) - initialPosition + positionIncreasement }, 0, 0.8, color);
 

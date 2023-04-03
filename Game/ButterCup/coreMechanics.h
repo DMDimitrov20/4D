@@ -8,7 +8,7 @@ void changeScreens(Vector2 mousePoint, Rectangle startButtonHitbox, int* menuSta
 
 void drawMenu(Texture2D title, Texture2D startButton, Texture2D exitButton, int width, int height);
 
-void drawMainGame(Texture2D flower, int width, int height, STORAGE storage, Vector2 mousePoint, Rectangle flowerHitbox, int wallet);
+void drawMainGame(Texture2D background, Texture2D flower, Texture2D garden, int width, int height, STORAGE storage, Vector2 mousePoint, Rectangle flowerHitbox, int wallet, std::vector<GARDEN_FLOWER> gardenFlowers);
 
 void showMoneyIncreaser(Vector2 mousePoint, Rectangle flowerHitbox, int moneyIncreaser);
 
