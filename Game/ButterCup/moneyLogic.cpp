@@ -3,7 +3,7 @@
 #include "game.h"
 
 // Add money on flower click
-void earnElements(Vector2 mousePoint, Rectangle flowerHitbox, STORAGE* storagePtr, double moneyInreaser)
+void earnElements(Vector2 mousePoint, Rectangle flowerHitbox, STORAGE* storagePtr, double elementsInreaser)
 {
 	if (CheckCollisionPointRec(mousePoint, flowerHitbox))
 	{
@@ -15,12 +15,12 @@ void earnElements(Vector2 mousePoint, Rectangle flowerHitbox, STORAGE* storagePt
 			{
 			case 1:
 			{
-				storagePtr->cElementCount += 1;
+				storagePtr->cElementCount += elementsInreaser;
 			}break;
 
 			case 2:
 			{
-				storagePtr->hElementCount += 1;
+				storagePtr->hElementCount += elementsInreaser;
 			}
 			}
 		}

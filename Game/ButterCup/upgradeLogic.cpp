@@ -1,5 +1,6 @@
 #include <raylib.h>
 #include <vector>
+#include <cmath>
 #include "game.h"
 #include "upgradeLogic.h"
 
@@ -34,11 +35,12 @@ void upgradeBuySystem(STORAGE* storagePtr, UPGRADE* upgradeArrPtr, double* defau
 	}
 }
 
-void flowerBuySystem(double* wallet, FLOWER* flowerArrPtr, double* oxygenInsreaser, Vector2 mousePoint, std::vector<GARDEN_FLOWER>* gardenFlowers)
+// System for buying flowers
+void flowerBuySystem(double* wallet, FLOWER* flowerArrPtr, double* elementsIncreaserPtr, double* oxygenIncreaserPtr,  Vector2 mousePoint, std::vector<GARDEN_FLOWER>* gardenFlowers)
 {
 	for (int i = 0; i < 3; i++)
 	{
-		// Check if upgrade is available
+		// Check if flower is available
 		if (*wallet >= flowerArrPtr[i].price)
 		{
 			flowerArrPtr[i].affordable = true;
@@ -48,19 +50,20 @@ void flowerBuySystem(double* wallet, FLOWER* flowerArrPtr, double* oxygenInsreas
 			flowerArrPtr[i].affordable = false;
 		}
 
-		// Buy upgrade
+		// Buy flower
 		if (flowerArrPtr[i].affordable)
 		{
 			if (CheckCollisionPointRec(mousePoint, flowerArrPtr[i].hitbox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 			{
 				flowerArrPtr[i].flowerCount++;
 				*wallet -= flowerArrPtr[i].price;
-				*oxygenInsreaser += flowerArrPtr[i].oxygenIncreaser;
+				*oxygenIncreaserPtr += flowerArrPtr[i].elementIncreaser;
+				*elementsIncreaserPtr = round(*elementsIncreaserPtr * flowerArrPtr[i].elementIncreaser);
 				flowerArrPtr[i].price *= 2;
 
 				GARDEN_FLOWER flower;
 				flower.xCor = GetRandomValue(230, 400);
-				flower.yCor = GetRandomValue(450, 600);
+				flower.yCor = GetRandomValue(550, 700);
 				flower.flowerImage = flowerArrPtr[i].image;
 
 				gardenFlowers->push_back(flower);

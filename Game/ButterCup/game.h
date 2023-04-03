@@ -28,7 +28,7 @@ struct FLOWER
 	bool affordable;
 	Rectangle hitbox;
 	int flowerCount = 0;
-	double oxygenIncreaser;
+	double elementIncreaser;
 };
 
 // Initialize structure for flowers in the garden

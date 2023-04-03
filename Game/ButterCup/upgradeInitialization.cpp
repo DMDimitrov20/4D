@@ -44,21 +44,21 @@ FLOWER* initializeFlowers(Texture2D upgradeFrame, int width, int height)
 	flowerArr[0].affordable = false;
 	flowerArr[0].image = LoadTexture("../resources/upgrades/SpiderPlant.png");
 	flowerArr[0].hitbox = { float(width / 2 - upgradeFrame.width / 2) + 700, float(height / 2 - upgradeFrame.height / 2) + 290, float(flowerArr[0].image.width) + 154, float(flowerArr[0].image.height) - 140 };
-	flowerArr[0].oxygenIncreaser = 0.1;
+	flowerArr[0].elementIncreaser = 1.5;
 
 	flowerArr[1].name = "Snake Plant";
 	flowerArr[1].price = 2500;
 	flowerArr[1].affordable = false;
 	flowerArr[1].image = LoadTexture("../resources/upgrades/SnakePlant.png");
 	flowerArr[1].hitbox = { float(width / 2 - upgradeFrame.width / 2) + 700, float(height / 2 - upgradeFrame.height / 2) + 290 + positionIncreasement, float(flowerArr[1].image.width) + 154, float(flowerArr[0].image.height) - 140 };
-	flowerArr[1].oxygenIncreaser = 0.2;
+	flowerArr[1].elementIncreaser = 2;
 
 	flowerArr[2].name = "Gerbera Daisy";
 	flowerArr[2].price = 10000;
 	flowerArr[2].affordable = false;
 	flowerArr[2].image = LoadTexture("../resources/upgrades/GerberaDaisy.png");
 	flowerArr[2].hitbox = { float(width / 2 - upgradeFrame.width / 2) + 700, float(height / 2 - upgradeFrame.height / 2) + 290 + (positionIncreasement) * 2, float(flowerArr[2].image.width) + 154, float(flowerArr[0].image.height) - 140 };
-	flowerArr[2].oxygenIncreaser = 0.5;
+	flowerArr[2].elementIncreaser = 2.5;
 
 	return flowerArr;
 }

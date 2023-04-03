@@ -9,6 +9,7 @@
 
 void startGame()
 {
+	// Initialize window resolution
 	int width = 1920;
 	int height = 1080;
 	
@@ -21,15 +22,16 @@ void startGame()
 	storage.hElementCount = 0;
 
 	// Initialize player's wallet
-	double wallet = 0;
+	double wallet = 1000;
 	double* walletPtr = &wallet;
 
-	//Initialize oxygen level
+	//Initialize oxygen level variable
 	double oxygenLevel = 0;
 	double* oxygenLevelPtr = &oxygenLevel;
 	
 	// Initialize variable for increasing player's chemicals
-	double moneyIncreaser = 1;
+	double elementsIncreaser = 1;
+	double* elementsIncreaserPtr = &elementsIncreaser;
 	double defaultMoneyIncreaser = 0;
 	double* defaultMoneyIncreaserPtr = &defaultMoneyIncreaser;
 	
@@ -51,6 +53,9 @@ void startGame()
 	Texture2D upgradeFrame = LoadTexture("../resources/upgrades/upgradeTable.png");
 	Texture2D flowerFrame = LoadTexture("../resources/upgrades/FlowerTable.png");
 	Texture2D garden = LoadTexture("../resources/garden.png");
+	Texture2D moneyIcon = LoadTexture("../resources/money.png");
+	Texture2D cElementIcon = LoadTexture("../resources/cElementIcon.png");
+	Texture2D hElementIcon = LoadTexture("../resources/hElementIcon.png");
 
 	// Initialize upgrade array
 	UPGRADE* upgradeArr = initializeUpgrades(upgradeFrame, width, height);
@@ -65,12 +70,15 @@ void startGame()
 	// Initialize hitboxes
 	Rectangle startButtonHitbox = { float(width) / 2 - float(startButton.width) / 2, 500 - float(startButton.height) / 2, startButton.width, startButton.height };
 	Rectangle exitButtonHitbox = { float(width) / 2 - float(exitButton.width) / 2, 700 - float(exitButton.height) / 2, exitButton.width, exitButton.height };
-	Rectangle flowerHitbox  = { float(width) / 2 - float(flower.width) / 2, float(height) / 2 - 300, flower.width, flower.height };
+	Rectangle flowerHitbox  = { float(width) / 2 - float((flower.width) / 2 * 1.35) + 100, float(height) / 2 - 250, flower.width - 100, flower.height + 50 };
 	Rectangle rec = { 210, 430, 210, 190 };
 	
 	// Initialize variable for closing the game
 	bool exitWindow = false;
 	bool* exitPtr = &exitWindow;
+
+	// Put the game into fullscreen mode
+	ToggleFullscreen();
 
 	while (!exitWindow)
 	{
@@ -81,13 +89,13 @@ void startGame()
 		
 		if (screenState == 2)
 		{
-			earnElements(mousePoint, flowerHitbox, storagePtr, moneyIncreaser);
+			earnElements(mousePoint, flowerHitbox, storagePtr, elementsIncreaser);
 
 			upgradeBuySystem(storagePtr, upgradeArr, defaultMoneyIncreaserPtr, mousePoint);
 
 			defaultMoneyIncrease(walletPtr, defaultMoneyIncreaser);
 
-			flowerBuySystem(walletPtr, flowerArr, oxygenLevelPtr, mousePoint, gardenFlowersPtr);
+			flowerBuySystem(walletPtr, flowerArr, elementsIncreaserPtr, oxygenLevelPtr, mousePoint, gardenFlowersPtr);
 		}
 
 		BeginDrawing();
@@ -112,13 +120,15 @@ void startGame()
 		// Draw game screen
 		case 2:
 		{
-			drawMainGame(gameBackground, flower, garden, width, height, storage, mousePoint, flowerHitbox, wallet, gardenFlowers);
+			drawMainGame(moneyIcon, cElementIcon, hElementIcon, gameBackground, flower, garden, width, height, storage, mousePoint, flowerHitbox, wallet, gardenFlowers, oxygenLevel);
 
-			showMoneyIncreaser(mousePoint, flowerHitbox, moneyIncreaser);
+			showMoneyIncreaser(mousePoint, flowerHitbox, elementsIncreaser);
 
-			drawUpgradeMenu(upgradeArr, upgradeFrame, width, height, mousePoint);
+			drawUpgradeMenu(cElementIcon, hElementIcon, upgradeArr, upgradeFrame, width, height, mousePoint);
 
-			drawFlowerMenu(flowerArr, flowerFrame, width, height, mousePoint);
+			drawFlowerMenu(moneyIcon, flowerArr, flowerFrame, width, height, mousePoint);
+
+			DrawTextureEx(backgroundFrame, Vector2{ 0,0 }, 0, 1, RAYWHITE);
 		}break;
 
 		}
