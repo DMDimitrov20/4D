@@ -78,7 +78,6 @@ void startGame()
 	bool* exitPtr = &exitWindow;
 
 	// Put the game into fullscreen mode
-	ToggleFullscreen();
 
 	while (!exitWindow)
 	{
