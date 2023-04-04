@@ -79,6 +79,8 @@ void startGame()
 
 	// Put the game into fullscreen mode
 
+	ToggleFullscreen();
+
 	while (!exitWindow)
 	{
 		// Get mouse position
